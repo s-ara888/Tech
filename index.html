@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Glasses Try-On</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="tryon-container">
+    <div class="face-container">
+      <img src="face.png" alt="Face" class="face">
+      <img id="glasses" src="glasses1.png" alt="Glasses" class="glasses-frame">
+    </div>
+
+    <!-- Frame navigation (changes the main glasses) -->
+    <div class="frame-navigation">
+      <button id="framePrev" aria-label="Previous frame">⟨</button>
+      <button id="frameNext" aria-label="Next frame">⟩</button>
+    </div>
+
+    <!-- Thumbnail gallery with its own arrows (scroll only) -->
+    <div class="gallery-wrapper">
+      <button id="galleryPrev" aria-label="Scroll left">←</button>
+      <div class="thumbnails" id="thumbnails">
+        <img src="glasses1.png" alt="Glasses 1" data-src="glasses1.png">
+        <img src="glasses2.png" alt="Glasses 2" data-src="glasses2.png">
+        <img src="glasses3.png" alt="Glasses 3" data-src="glasses3.png">
+        <img src="glasses4.png" alt="Glasses 4" data-src="glasses4.png">
+      </div>
+      <button id="galleryNext" aria-label="Scroll right">→</button>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+
+
