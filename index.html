@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Glasses Try-On</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <title>Virtual Glasses Try-On</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="tryon-container">
-    <div class="face-container">
-      <img src="face.png" alt="Face" class="face">
+
+    <h1>Virtual Glasses Try-On</h1>
+
+    <!-- Upload Section -->
+    <div class="upload-section">
+      <p class="upload-text">Upload your photo:</p>
+      <input type="file" id="uploadInput" accept="image/*">
+      <button id="deleteBtn" class="upload-btn">Delete Photo</button>
+    </div>
+
+    <!-- Try-On Area -->
+    <div id="tryonArea" class="face-container">
+      <img id="face" src="face.png" alt="Face" class="face">
       <img id="glasses" src="glasses1.png" alt="Glasses" class="glasses-frame">
-       </div>
-    <div class="resize-controls">
-  <button id="smaller">-</button>
-  <button id="bigger">+</button>
-</div>
     </div>
 
-    <!-- Frame navigation (changes the main glasses) -->
-    <div class="frame-navigation">
-      <button id="framePrev" aria-label="Previous frame">⟨</button>
-      <button id="frameNext" aria-label="Next frame">⟩</button>
-    </div>
-
-    <!-- Thumbnail gallery with its own arrows (scroll only) -->
-    <div class="gallery-wrapper">
-      <button id="galleryPrev" aria-label="Scroll left">←</button>
-      <div class="thumbnails" id="thumbnails">
-        <img src="glasses1.png" alt="Glasses 1" data-src="glasses1.png">
-        <img src="glasses2.png" alt="Glasses 2" data-src="glasses2.png">
-        <img src="glasses3.png" alt="Glasses 3" data-src="glasses3.png">
-        <img src="glasses4.png" alt="Glasses 4" data-src="glasses4.png">
+    <!-- Resize Controls -->
+    <div class="controls">
+      <div class="glasses-resize-controls">
+        <button id="glassesMinus">-</button>
+        <button id="glassesPlus">+</button>
       </div>
-      <button id="galleryNext" aria-label="Scroll right">→</button>
-   
+
+      <div class="face-resize-controls">
+        <button id="faceMinus">-</button>
+        <button id="facePlus">+</button>
+      </div>
+    </div>
+
+    <!-- Glasses Gallery -->
+    <div class="thumbnails">
+      <p>Select a frame:</p>
+      <img src="glasses1.png" data-frame="glasses1.png" onclick="setGlasses('glasses1.png')" alt="Frame 1">
+      <img src="glasses2.png" data-frame="glasses2.png" onclick="setGlasses('glasses2.png')" alt="Frame 2">
+      <img src="glasses3.png" data-frame="glasses3.png" onclick="setGlasses('glasses3.png')" alt="Frame 3">
+    </div>
 
   </div>
 
   <script src="main.js"></script>
 </body>
 </html>
-
-
-
-
