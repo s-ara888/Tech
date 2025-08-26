@@ -27,14 +27,12 @@ body {
 /* Glasses overlay (no slide transitions) */
 .glasses-frame {
   position: absolute;
-  top: 160px;
-  left: 140px;
-  width: 200px;   /* smaller size */
   cursor: grab;
   user-select: none;
   -webkit-user-drag: none;
   touch-action: none;
 }
+
 
 .glasses-frame:active { cursor: grabbing; }
 
@@ -110,5 +108,58 @@ input[type="range"], progress {
 }
 
 
+.resize-controls {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.resize-controls button {
+  font-size: 20px;
+  padding: 8px 15px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 8px;
+  background: #444;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.resize-controls button:hover {
+  background: #666;
+}
+.face-container {
+  position: relative;
+  display: inline-block;
+}
+
+.resize-controls {
+  position: absolute;
+  bottom: 10px;      /* place near the chin */
+  right: 10px;       /* stick to the right side */
+  display: flex;
+  gap: 8px;
+}
+
+.resize-controls button {
+  font-size: 20px;         /* big enough symbol */
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  cursor: pointer;
+  display: flex;           /* flexbox centers content */
+  align-items: center;     /* vertical center */
+  justify-content: center; /* horizontal center */
+  line-height: 1;          /* avoid misalignment */
+  transition: background 0.2s ease;
+}
+
+
+.resize-controls button:hover {
+  background: rgba(0,0,0,0.8);
+}
 
 

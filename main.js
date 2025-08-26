@@ -202,6 +202,172 @@ document.addEventListener("DOMContentLoaded", () => {
   // Default load
   setGlasses("glasses1.png");
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const glassesImg = document.getElementById("glasses");
+  const thumbnails = document.querySelectorAll(".thumbnails img");
+
+  // Store positions and sizes for each glasses image
+  const glassesConfig = {
+    "glasses1.png": { top: "160px", left: "140px", width: "250px" }, // bigger
+    "glasses2.png": { top: "165px", left: "150px", width: "140px" }, // smaller
+    "glasses3.png": { top: "158px", left: "145px", width: "100px" }  // medium
+  };
+
+  let activeGlasses = "glasses1.png";
+
+  function applyConfig(src) {
+    const config = glassesConfig[src];
+    if (config) {
+      glassesImg.style.top = config.top;
+      glassesImg.style.left = config.left;
+      glassesImg.style.width = config.width;
+      glassesImg.style.transform = "translate(0, 0)";
+    }
+  }
+
+  // Switch glasses
+  window.setGlasses = function (src) {
+    activeGlasses = src;
+    glassesImg.src = src;
+    applyConfig(src);
+
+    // Update highlight
+    thumbnails.forEach(thumb => thumb.classList.remove("selected"));
+    const activeThumb = Array.from(thumbnails).find(thumb => thumb.src.includes(src));
+    if (activeThumb) activeThumb.classList.add("selected");
+  };
+
+  // --- Dragging ---
+  let isDragging = false;
+  let startX, startY, startTop, startLeft;
+
+  glassesImg.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startTop = glassesImg.offsetTop;
+    startLeft = glassesImg.offsetLeft;
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    glassesImg.style.top = startTop + dy + "px";
+    glassesImg.style.left = startLeft + dx + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    if (isDragging) {
+      // Save new position for this glasses
+      glassesConfig[activeGlasses].top = glassesImg.style.top;
+      glassesConfig[activeGlasses].left = glassesImg.style.left;
+    }
+    isDragging = false;
+  });
+
+  // --- Resizing with mouse wheel ---
+  glassesImg.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    let currentWidth = parseFloat(glassesImg.style.width);
+    if (e.deltaY < 0) {
+      currentWidth += 2; // zoom in
+    } else {
+      currentWidth -= 2; // zoom out
+    }
+    glassesImg.style.width = currentWidth + "%";
+
+    // Save new size
+    glassesConfig[activeGlasses].width = glassesImg.style.width;
+  });
+
+  // Default load
+  setGlasses("glasses1.png");
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const glassesImg = document.getElementById("glasses");
+  const thumbnails = document.querySelectorAll(".thumbnails img");
+  const btnSmaller = document.getElementById("smaller");
+  const btnBigger = document.getElementById("bigger");
+
+  // Store positions and widths (width in pixels as a number)
+  const glassesConfig = {
+    "glasses1.png": { top: 160, left: 140, width: 280 }, // bigger
+    "glasses2.png": { top: 165, left: 150, width: 180 }, // smaller
+    "glasses3.png": { top: 158, left: 145, width: 220 }  // medium
+  };
+
+  let activeGlasses = "glasses1.png";
+
+  function applyConfig(src) {
+    const config = glassesConfig[src];
+    if (config) {
+      glassesImg.style.top = config.top + "px";
+      glassesImg.style.left = config.left + "px";
+      glassesImg.style.width = config.width + "px";
+      glassesImg.style.transform = "translate(0, 0)";
+    }
+  }
+
+  // Switch glasses
+  window.setGlasses = function (src) {
+    activeGlasses = src;
+    glassesImg.src = src;
+    applyConfig(src);
+
+    // Update highlight
+    thumbnails.forEach(thumb => thumb.classList.remove("selected"));
+    const activeThumb = Array.from(thumbnails).find(thumb => thumb.src.includes(src));
+    if (activeThumb) activeThumb.classList.add("selected");
+  };
+
+  // --- Dragging ---
+  let isDragging = false;
+  let startX, startY, startTop, startLeft;
+
+  glassesImg.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startTop = glassesImg.offsetTop;
+    startLeft = glassesImg.offsetLeft;
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    glassesImg.style.top = startTop + dy + "px";
+    glassesImg.style.left = startLeft + dx + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    if (isDragging) {
+      // Save new position for this glasses
+      glassesConfig[activeGlasses].top = parseInt(glassesImg.style.top);
+      glassesConfig[activeGlasses].left = parseInt(glassesImg.style.left);
+    }
+    isDragging = false;
+  });
+
+  // --- Resize with + / - buttons ---
+  function resizeGlasses(change) {
+    let currentWidth = glassesConfig[activeGlasses].width;
+    currentWidth += change;
+    if (currentWidth < 50) currentWidth = 50; // minimum
+    if (currentWidth > 600) currentWidth = 600; // maximum
+    glassesConfig[activeGlasses].width = currentWidth;
+    glassesImg.style.width = currentWidth + "px";
+  }
+
+  btnSmaller.addEventListener("click", () => resizeGlasses(-10));
+  btnBigger.addEventListener("click", () => resizeGlasses(10));
+
+  // Default load
+  setGlasses("glasses1.png");
+});
 
 
 
