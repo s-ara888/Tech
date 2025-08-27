@@ -120,6 +120,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Init ---
   applyConfig(activeGlasses);
 });
+const glassesImg = document.getElementById("glasses");
+
+// list of available glasses
+const glassesList = [
+  "glasses1.png",
+  "glasses2.png",
+  "glasses3.png",
+  "glasses4.png"
+];
+
+let currentIndex = 0;
+
+document.getElementById("nextGlasses").addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % glassesList.length;
+  glassesImg.src = glassesList[currentIndex];
+});
+
+document.getElementById("prevGlasses").addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + glassesList.length) % glassesList.length;
+  glassesImg.src = glassesList[currentIndex];
+});
 
 
 

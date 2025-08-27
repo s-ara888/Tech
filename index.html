@@ -7,7 +7,6 @@
 </head>
 <body>
   <div class="tryon-container">
-
     <h1>Virtual Glasses Try-On</h1>
 
     <!-- Upload Section -->
@@ -22,6 +21,11 @@
       <img id="face" src="face.png" alt="Face" class="face">
       <img id="glasses" src="glasses1.png" alt="Glasses" class="glasses-frame">
     </div>
+ <div class="glasses-switch-controls">
+  <button id="prevGlasses">◀</button>
+  <button id="nextGlasses">▶</button>
+</div>
+
 
     <!-- Resize Controls -->
     <div class="controls">
@@ -37,13 +41,17 @@
     </div>
 
     <!-- Glasses Gallery -->
-    <div class="thumbnails">
-      <p>Select a frame:</p>
-      <img src="glasses1.png" data-frame="glasses1.png" onclick="setGlasses('glasses1.png')" alt="Frame 1">
-      <img src="glasses2.png" data-frame="glasses2.png" onclick="setGlasses('glasses2.png')" alt="Frame 2">
-      <img src="glasses3.png" data-frame="glasses3.png" onclick="setGlasses('glasses3.png')" alt="Frame 3">
-    </div>
-
+    <section class="gallery-container">
+      <h2 class="gallery-title">Our Collection</h2>
+      <div class="thumbnails">
+        <div class="frame-card"><img src="glasses1.png" alt="Glass 1"></div>
+        <div class="frame-card"><img src="glasses2.png" alt="Glass 2"></div>
+        <div class="frame-card"><img src="glasses3.png" alt="Glass 3"></div>
+        <div class="frame-card"><img src="glasses4.png" alt="Glass 4"></div>
+        <div class="frame-card"><img src="glasses5.png" alt="Glass 5"></div>
+        <!-- Add more frames here -->
+      </div>
+    </section>
   </div>
 
   <script src="main.js"></script>
