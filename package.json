@@ -1,0 +1,20 @@
+{
+  "name": "tech",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-ara888/Tech.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s-ara888/Tech/issues"
+  },
+  "homepage": "https://github.com/s-ara888/Tech#readme"
+}

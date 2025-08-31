@@ -1,154 +1,124 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const faceImg = document.getElementById("face");
-  const glassesImg = document.getElementById("glasses");
-  const uploadInput = document.getElementById("uploadInput");
-  const tryonArea = document.getElementById("tryonArea");
-  const thumbnails = document.querySelectorAll(".thumbnails img");
+// =======================
+// ELEMENTS
+// =======================
+const faceImg = document.getElementById("face");
+const glassesImg = document.getElementById("glasses");
+const uploadInput = document.getElementById("uploadInput");
+const deletePhotoBtn = document.getElementById("deletePhoto");
+const deleteModal = document.getElementById("deleteModal");
+const confirmDelete = document.getElementById("confirmDelete");
+const cancelDelete = document.getElementById("cancelDelete");
+const smallerBtn = document.getElementById("smaller");
+const largerBtn = document.getElementById("larger");
+const glassesOptions = document.querySelectorAll(".glasses-option");
+const message = document.getElementById("message");
+const faceContainer = document.getElementById("faceContainer");
 
-  const defaultFaceSrc = faceImg.src;
-  const defaultWidth = 400, defaultHeight = 500;
+// =======================
+// INITIAL SETUP
+// =======================
+window.addEventListener("DOMContentLoaded", () => {
+  deleteModal.style.display = "none";
+  deletePhotoBtn.style.display = "none";
+  glassesImg.style.cursor = "grab";
+  glassesImg.style.position = "absolute";
+});
 
-  // --- CONFIG for each glasses ---
-  const glassesConfig = {
-    "glasses1.png": { top: 160, left: "50%", width: 280 }, // big
-    "glasses2.png": { top: 165, left: "50%", width: 180 }, // small
-    "glasses3.png": { top: 158, left: "50%", width: 220 }  // medium
-  };
-
-  let activeGlasses = "glasses1.png";
-
-  function applyConfig(src) {
-    const config = glassesConfig[src];
-    if (config) {
-      glassesImg.src = src;
-      glassesImg.style.top = config.top + "px";
-      glassesImg.style.left = config.left;
-      glassesImg.style.width = config.width + "px";
-      glassesImg.style.transform = "translateX(-50%)"; // center horizontally
-    }
-  }
-
-  // --- Switch Glasses ---
-  window.setGlasses = function (src) {
-    activeGlasses = src;
-    applyConfig(src);
-
-    thumbnails.forEach(thumb => thumb.classList.remove("selected"));
-    const activeThumb = Array.from(thumbnails).find(thumb => thumb.dataset.frame === src);
-    if (activeThumb) activeThumb.classList.add("selected");
-  };
-
-  // --- Upload Face ---
-  uploadInput.addEventListener("change", e => {
-    const file = e.target.files[0];
-    if (!file) return;
+// =======================
+// UPLOAD PHOTO
+// =======================
+uploadInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
     const reader = new FileReader();
-    reader.onload = function (event) {
-      faceImg.src = event.target.result;
-      faceImg.style.width = defaultWidth + "px";
-      faceImg.style.height = defaultHeight + "px";
-      faceImg.style.top = "50%";
-      faceImg.style.left = "50%";
-      faceImg.style.transform = "translate(-50%, -50%)";
+    reader.onload = function(e) {
+      faceImg.src = e.target.result;
+      deletePhotoBtn.style.display = "inline-block";
+      message.textContent = "";
+      // Center glasses inside container
+      glassesImg.style.left = (faceContainer.offsetWidth - glassesImg.offsetWidth) / 2 + "px";
+      glassesImg.style.top = (faceContainer.offsetHeight - glassesImg.offsetHeight) / 2 + "px";
     };
     reader.readAsDataURL(file);
-  });
-
-  // --- Delete Face ---
-  const deleteBtn = document.getElementById("deleteBtn");
-  deleteBtn.addEventListener("click", () => {
-    faceImg.src = defaultFaceSrc;
-    faceImg.style.width = defaultWidth + "px";
-    faceImg.style.height = defaultHeight + "px";
-    faceImg.style.top = "50%";
-    faceImg.style.left = "50%";
-    faceImg.style.transform = "translate(-50%, -50%)";
-    uploadInput.value = "";
-  });
-
-  // --- Resize Glasses (+/- buttons) ---
-  document.getElementById("glassesPlus").addEventListener("click", () => {
-    glassesConfig[activeGlasses].width += 10;
-    glassesImg.style.width = glassesConfig[activeGlasses].width + "px";
-  });
-  document.getElementById("glassesMinus").addEventListener("click", () => {
-    glassesConfig[activeGlasses].width = Math.max(50, glassesConfig[activeGlasses].width - 10);
-    glassesImg.style.width = glassesConfig[activeGlasses].width + "px";
-  });
-
-  // --- Resize Face (+/- buttons) ---
-  document.getElementById("facePlus").addEventListener("click", () => {
-    resizeFace(1.1);
-  });
-  document.getElementById("faceMinus").addEventListener("click", () => {
-    resizeFace(0.9);
-  });
-
-  function resizeFace(factor) {
-    let currentWidth = parseFloat(faceImg.style.width);
-    let currentHeight = parseFloat(faceImg.style.height);
-    faceImg.style.width = currentWidth * factor + "px";
-    faceImg.style.height = currentHeight * factor + "px";
   }
-
-  // --- Drag Glasses ---
-  let isDragging = false, startX, startY, startTop, startLeft;
-  glassesImg.addEventListener("mousedown", e => {
-    isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    startTop = glassesImg.offsetTop;
-    startLeft = glassesImg.offsetLeft;
-    e.preventDefault();
-  });
-
-  document.addEventListener("mousemove", e => {
-    if (!isDragging) return;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    glassesImg.style.top = startTop + dy + "px";
-    glassesImg.style.left = startLeft + dx + "px";
-  });
-
-  document.addEventListener("mouseup", () => {
-    isDragging = false;
-    // Save updated pos
-    glassesConfig[activeGlasses].top = parseInt(glassesImg.style.top);
-    glassesConfig[activeGlasses].left = glassesImg.style.left;
-  });
-
-  // --- Init ---
-  applyConfig(activeGlasses);
-});
-const glassesImg = document.getElementById("glasses");
-
-// list of available glasses
-const glassesList = [
-  "glasses1.png",
-  "glasses2.png",
-  "glasses3.png",
-  "glasses4.png"
-];
-
-let currentIndex = 0;
-
-document.getElementById("nextGlasses").addEventListener("click", () => {
-  currentIndex = (currentIndex + 1) % glassesList.length;
-  glassesImg.src = glassesList[currentIndex];
 });
 
-document.getElementById("prevGlasses").addEventListener("click", () => {
-  currentIndex = (currentIndex - 1 + glassesList.length) % glassesList.length;
-  glassesImg.src = glassesList[currentIndex];
+// =======================
+// DELETE PHOTO
+// =======================
+deletePhotoBtn.addEventListener("click", () => {
+  deleteModal.style.display = "flex";
 });
 
+confirmDelete.addEventListener("click", () => {
+  faceImg.src = "face.png"; // default image
+  deletePhotoBtn.style.display = "none";
+  deleteModal.style.display = "none";
+  message.textContent = "Photo deleted!";
+});
 
+cancelDelete.addEventListener("click", () => {
+  deleteModal.style.display = "none";
+});
 
+// =======================
+// GLASSES SIZE CONTROL
+// =======================
+let glassesWidth = 180; // default
+smallerBtn.addEventListener("click", () => {
+  if (glassesWidth > 50) glassesWidth -= 10;
+  glassesImg.style.width = glassesWidth + "px";
+});
 
+largerBtn.addEventListener("click", () => {
+  if (glassesWidth < 400) glassesWidth += 10;
+  glassesImg.style.width = glassesWidth + "px";
+});
 
+// =======================
+// CHANGE GLASSES
+// =======================
+glassesOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    glassesImg.src = option.dataset.frame;
+    glassesOptions.forEach(opt => opt.classList.remove("active"));
+    option.classList.add("active");
+  });
+});
 
+// =======================
+// DRAG AND MOVE GLASSES (CONSTRAINED TO FACE CONTAINER)
+// =======================
+let isDragging = false;
+let offsetX, offsetY;
 
+glassesImg.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  const rect = glassesImg.getBoundingClientRect();
+  offsetX = e.clientX - rect.left;
+  offsetY = e.clientY - rect.top;
+  glassesImg.style.cursor = "grabbing";
+});
 
+document.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
 
+  const containerRect = faceContainer.getBoundingClientRect();
+  const glassesRect = glassesImg.getBoundingClientRect();
 
+  let newLeft = e.clientX - containerRect.left - offsetX;
+  let newTop = e.clientY - containerRect.top - offsetY;
+
+  // Constrain within container
+  newLeft = Math.max(0, Math.min(newLeft, containerRect.width - glassesRect.width));
+  newTop = Math.max(0, Math.min(newTop, containerRect.height - glassesRect.height));
+
+  glassesImg.style.left = newLeft + "px";
+  glassesImg.style.top = newTop + "px";
+});
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
+  glassesImg.style.cursor = "grab";
+});
 
