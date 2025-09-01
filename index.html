@@ -29,7 +29,8 @@
     <h2>Discover Your Perfect Frame</h2>
     <p>Stylish, high-quality glasses for every face and style. Browse our collection today!</p>
     <div class="hero-badges">
-      <span class="badge new">New Arrival</span>
+      <!-- Link New Arrival badge to new arrival section -->
+      <span class="badge new"><a href="#newarrival" style="color:inherit; text-decoration:none;">New Arrival</a></span>
       <span class="badge best">Best Sellers</span>
       <span class="badge limited">Limited Edition</span>
     </div>
@@ -49,9 +50,9 @@
   <div class="tryon-container">
     <div class="photo-area">
       <label for="uploadInput" class="upload-label">📷 Upload Your Photo</label>
-     <input type="file" id="uploadInput" accept="image/*" hidden>
+      <input type="file" id="uploadInput" accept="image/*" hidden>
 
-      <div class="face-container">
+      <div class="face-container" id="faceContainer">
         <img id="face" src="face.png" alt="Uploaded Face">
         <img id="glasses" src="glasses1.png" alt="Glasses">
       </div>
@@ -143,6 +144,69 @@
     </div>
   </div>
 </section>
+
+
+<!-- HIDDEN PRODUCT SECTION -->
+<section id="tech-product" class="tech-product active">
+  <div class="product-content">
+
+    <h2 class="product-title">SmartCam Glasses</h2>
+    <p class="product-subtitle">Redefining Vision. Powered by Technology.</p>
+
+    <!-- Image Carousel with Gold Background -->
+    <div class="product-carousel">
+      <div class="product-img-wrapper">
+        <img src="smartglasses1.png" alt="Smart Glasses Front" class="carousel-img active">
+        <img src="smartglasses2.png" alt="Smart Glasses Side" class="carousel-img">
+      </div>
+
+      <!-- Carousel Buttons -->
+      <button class="carousel-btn prev">&#10094;</button>
+      <button class="carousel-btn next">&#10095;</button>
+    </div>
+
+    <!-- Features -->
+    <ul class="product-features">
+      <li>Hidden 4K Camera with Voice Control</li>
+      <li>Built-in Speakers for Seamless Audio</li>
+      <li>Augmented Reality Ready Display</li>
+      <li>All-Day Battery Life with Fast Charging</li>
+      <li>Cloud Sync for Photos & Videos</li>
+    </ul>
+
+    <!-- Buy Button -->
+    <button class="buy-btn">Buy Now</button>
+
+    <!-- LIMITED EDITION BUTTON (centered with sparks) -->
+    <div class="limited-btn-wrapper">
+      <button id="limited-btn" class="limited-btn">Limited Edition</button>
+
+      <!-- Floating Sparks -->
+      <span class="spark" style="--x: 30; --y: 50;"></span>
+      <span class="spark" style="--x: -40; --y: 60;"></span>
+      <span class="spark" style="--x: 50; --y: 30;"></span>
+      <span class="spark" style="--x: -30; --y: 40;"></span>
+      <span class="spark" style="--x: 20; --y: 70;"></span>
+      <span class="spark" style="--x: -50; --y: 50;"></span>
+      <span class="spark" style="--x: 60; --y: 20;"></span>
+      <span class="spark" style="--x: -20; --y: 60;"></span>
+      <span class="spark" style="--x: 40; --y: -30;"></span>
+      <span class="spark" style="--x: -35; --y: -40;"></span>
+      <span class="spark" style="--x: 25; --y: -50;"></span>
+      <span class="spark" style="--x: -45; --y: 35;"></span>
+      <span class="spark" style="--x: 50; --y: 50;"></span>
+      <span class="spark" style="--x: -30; --y: 20;"></span>
+      <span class="spark" style="--x: 20; --y: -40;"></span>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
 
 <!-- ===== ABOUT SECTION ===== -->
 <section id="about" class="about-section">

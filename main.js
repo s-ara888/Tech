@@ -22,6 +22,9 @@ window.addEventListener("DOMContentLoaded", () => {
   deletePhotoBtn.style.display = "none";
   glassesImg.style.cursor = "grab";
   glassesImg.style.position = "absolute";
+  // Center glasses initially
+  glassesImg.style.left = (faceContainer.offsetWidth - glassesImg.offsetWidth) / 2 + "px";
+  glassesImg.style.top = (faceContainer.offsetHeight - glassesImg.offsetHeight) / 2 + "px";
 });
 
 // =======================
@@ -35,13 +38,17 @@ uploadInput.addEventListener("change", (e) => {
       faceImg.src = e.target.result;
       deletePhotoBtn.style.display = "inline-block";
       message.textContent = "";
-      // Center glasses inside container
-      glassesImg.style.left = (faceContainer.offsetWidth - glassesImg.offsetWidth) / 2 + "px";
-      glassesImg.style.top = (faceContainer.offsetHeight - glassesImg.offsetHeight) / 2 + "px";
+      centerGlasses();
     };
     reader.readAsDataURL(file);
   }
 });
+
+// Center glasses function
+function centerGlasses() {
+  glassesImg.style.left = (faceContainer.offsetWidth - glassesImg.offsetWidth) / 2 + "px";
+  glassesImg.style.top = (faceContainer.offsetHeight - glassesImg.offsetHeight) / 2 + "px";
+}
 
 // =======================
 // DELETE PHOTO
@@ -51,7 +58,7 @@ deletePhotoBtn.addEventListener("click", () => {
 });
 
 confirmDelete.addEventListener("click", () => {
-  faceImg.src = "face.png"; // default image
+  faceImg.src = "face.png";
   deletePhotoBtn.style.display = "none";
   deleteModal.style.display = "none";
   message.textContent = "Photo deleted!";
@@ -66,14 +73,36 @@ cancelDelete.addEventListener("click", () => {
 // =======================
 let glassesWidth = 180; // default
 smallerBtn.addEventListener("click", () => {
-  if (glassesWidth > 50) glassesWidth -= 10;
-  glassesImg.style.width = glassesWidth + "px";
+  resizeGlasses(-10);
 });
 
 largerBtn.addEventListener("click", () => {
-  if (glassesWidth < 400) glassesWidth += 10;
-  glassesImg.style.width = glassesWidth + "px";
+  resizeGlasses(10);
 });
+
+function resizeGlasses(delta) {
+  const containerRect = faceContainer.getBoundingClientRect();
+  const currentLeft = parseFloat(glassesImg.style.left || 0);
+  const currentTop = parseFloat(glassesImg.style.top || 0);
+  const oldWidth = glassesImg.offsetWidth;
+  const oldHeight = glassesImg.offsetHeight;
+  
+  glassesWidth = Math.min(400, Math.max(50, oldWidth + delta));
+  const scale = glassesWidth / oldWidth;
+  glassesImg.style.width = glassesWidth + "px";
+  glassesImg.style.height = oldHeight * scale + "px";
+
+  // Keep glasses centered relative to previous position
+  let newLeft = currentLeft - ((glassesImg.offsetWidth - oldWidth) / 2);
+  let newTop = currentTop - ((glassesImg.offsetHeight - oldHeight) / 2);
+
+  // Keep inside container
+  newLeft = Math.max(0, Math.min(newLeft, containerRect.width - glassesImg.offsetWidth));
+  newTop = Math.max(0, Math.min(newTop, containerRect.height - glassesImg.offsetHeight));
+
+  glassesImg.style.left = newLeft + "px";
+  glassesImg.style.top = newTop + "px";
+}
 
 // =======================
 // CHANGE GLASSES
@@ -87,38 +116,96 @@ glassesOptions.forEach(option => {
 });
 
 // =======================
-// DRAG AND MOVE GLASSES (CONSTRAINED TO FACE CONTAINER)
+// DRAG & MOVE GLASSES (Smooth & Free with Margin)
 // =======================
 let isDragging = false;
-let offsetX, offsetY;
+let offsetX = 0;
+let offsetY = 0;
+const margin = 50; // how far glasses can go outside the face container
 
-glassesImg.addEventListener("mousedown", (e) => {
-  isDragging = true;
+function startDrag(clientX, clientY) {
   const rect = glassesImg.getBoundingClientRect();
-  offsetX = e.clientX - rect.left;
-  offsetY = e.clientY - rect.top;
-  glassesImg.style.cursor = "grabbing";
-});
+  offsetX = clientX - rect.left;
+  offsetY = clientY - rect.top;
+  isDragging = true;
+}
 
-document.addEventListener("mousemove", (e) => {
+function dragMove(clientX, clientY) {
   if (!isDragging) return;
 
   const containerRect = faceContainer.getBoundingClientRect();
-  const glassesRect = glassesImg.getBoundingClientRect();
+  let newLeft = clientX - containerRect.left - offsetX;
+  let newTop = clientY - containerRect.top - offsetY;
 
-  let newLeft = e.clientX - containerRect.left - offsetX;
-  let newTop = e.clientY - containerRect.top - offsetY;
-
-  // Constrain within container
-  newLeft = Math.max(0, Math.min(newLeft, containerRect.width - glassesRect.width));
-  newTop = Math.max(0, Math.min(newTop, containerRect.height - glassesRect.height));
+  // Constrain with margin outside the container
+  newLeft = Math.max(-margin, Math.min(newLeft, containerRect.width - glassesImg.offsetWidth + margin));
+  newTop = Math.max(-margin, Math.min(newTop, containerRect.height - glassesImg.offsetHeight + margin));
 
   glassesImg.style.left = newLeft + "px";
   glassesImg.style.top = newTop + "px";
-});
+}
 
-document.addEventListener("mouseup", () => {
+function stopDrag() {
   isDragging = false;
   glassesImg.style.cursor = "grab";
+}
+
+// Mouse events
+glassesImg.addEventListener("mousedown", (e) => {
+  e.preventDefault();
+  startDrag(e.clientX, e.clientY);
+  glassesImg.style.cursor = "grabbing";
 });
+
+document.addEventListener("mousemove", (e) => dragMove(e.clientX, e.clientY));
+document.addEventListener("mouseup", stopDrag);
+
+// Touch events
+glassesImg.addEventListener("touchstart", (e) => {
+  const touch = e.touches[0];
+  startDrag(touch.clientX, touch.clientY);
+});
+
+document.addEventListener("touchmove", (e) => {
+  const touch = e.touches[0];
+  dragMove(touch.clientX, touch.clientY);
+});
+const limitedBtn = document.getElementById("limited-btn");
+const techProduct = document.getElementById("tech-product");
+
+limitedBtn.addEventListener("click", () => {
+  techProduct.classList.toggle("active");
+  limitedBtn.textContent = techProduct.classList.contains("active")
+    ? "Close Limited Edition"
+    : "Limited Edition";
+});
+
+// Carousel
+const carouselImages = document.querySelectorAll(".carousel-img");
+const prevBtn = document.querySelector(".carousel-btn.prev");
+const nextBtn = document.querySelector(".carousel-btn.next");
+let currentIndex = 0;
+
+function showImage(index) {
+  carouselImages.forEach(img => img.classList.remove("active"));
+  carouselImages[index].classList.add("active");
+}
+
+prevBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+  showImage(currentIndex);
+});
+
+nextBtn.addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % carouselImages.length;
+  showImage(currentIndex);
+});
+
+// Show first image by default
+showImage(currentIndex);
+
+
+
+
+
 

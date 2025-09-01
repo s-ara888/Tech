@@ -1292,10 +1292,364 @@ body, html {
 #glasses:active {
   cursor: grabbing;
 }
+.controls button {
+  padding: 6px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: #ff7e5f;
+  color: white;
+  cursor: pointer;
+  margin: 0 4px;
+  transition: all 0.2s ease;
+}
 
+.controls button:hover {
+  background-color: #feb47b;
+  transform: translateY(-1px);
+}
+/* Buy buttons in the Try-On collection */
+.glasses-item button,
+.price-card button {  /* Add this line for Prices section buttons */
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
+/* Hover effect for all Buy buttons */
+.glasses-item button:hover,
+.price-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #feb47b, #ff7e5f);
+}
+/* BUTTON WRAPPER (centered) */
+/* ----------------- TECH PRODUCT SECTION ----------------- */
+/* ----------------- TECH PRODUCT SECTION ----------------- */
+.tech-product {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.8s ease;
+  margin: 40px auto;
+  width: 90%;
+  max-width: 900px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #1f1f1f, #2c2c2c); /* dark background */
+  color: #fff;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  position: relative;
+  padding: 0;
+  text-align: center;
+}
 
+/* ACTIVE STATE */
+.tech-product.active {
+  max-height: 1400px;
+  padding: 50px 30px;
+  opacity: 1;
+}
 
+/* ----------------- PRODUCT TITLE ----------------- */
+.product-title {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: #ffcc33; /* visible gold text */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.product-subtitle {
+  font-size: 18px;
+  margin-bottom: 30px;
+  font-style: italic;
+  color: #f0f0f0; /* light text for contrast */
+}
+
+/* ----------------- IMAGE CAROUSEL ----------------- */
+.product-carousel {
+  position: relative;
+  width: 300px;
+  max-width: 80%;
+  margin: 0 auto 30px auto;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.6);
+}
+
+/* Wrapper for glasses with subtle white halo */
+.product-img-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 25px;
+  border-radius: 25px;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1), rgba(255,255,255,0.02)); /* subtle white glow */
+  box-shadow: 0 8px 25px rgba(255,255,255,0.1); /* soft halo */
+  margin: 20px auto;
+}
+
+/* Halo behind glasses */
+.product-img-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255,255,255,0.4), rgba(255,255,255,0));
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  filter: blur(20px);
+  animation: haloPulse 3s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+/* Glasses images */
+.product-img-wrapper .carousel-img {
+  width: 300px;
+  max-width: 80%;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
+  transition: transform 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.product-img-wrapper .carousel-img:hover {
+  transform: scale(1.05);
+}
+
+/* Carousel buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(36,59,85,0.8);
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  font-size: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.carousel-btn:hover {
+  background: #243b55;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev { left: -25px; }
+.carousel-btn.next { right: -25px; }
+
+/* ----------------- FEATURES ----------------- */
+.product-features {
+  list-style: none;
+  padding: 0;
+  margin: 30px auto;
+  text-align: left;
+  max-width: 500px;
+}
+
+.product-features li {
+  font-size: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  color: #fff; /* white for contrast */
+  position: relative;
+  padding-left: 25px;
+}
+
+.product-features li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #ffcc33;
+}
+
+/* ----------------- BUY BUTTON ----------------- */
+.buy-btn {
+  background: linear-gradient(90deg, #e63946, #f3722c);
+  color: #fff;
+  border: none;
+  padding: 18px 50px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 25px;
+  box-shadow: 0 0 20px rgba(230,57,70,0.6);
+  transition: all 0.3s ease;
+}
+
+.buy-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(230,57,70,1);
+}
+
+/* ----------------- LIMITED EDITION BUTTON ----------------- */
+.limited-btn-wrapper {
+  text-align: center;
+  margin: 50px 0 0;
+  position: relative;
+}
+
+.limited-btn {
+  background: linear-gradient(135deg, #e63946, #f3722c, #fcbf49);
+  background-size: 300% 300%;
+  color: #fff;
+  border: none;
+  padding: 20px 60px;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 60px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  animation: gradientShift 4s ease infinite, pulseGlow 2.5s ease-in-out infinite;
+  z-index: 1;
+}
+
+.limited-btn:hover {
+  transform: scale(1.15) rotate(-1deg);
+  box-shadow: 0 14px 40px rgba(252,191,73,0.7), 0 12px 25px rgba(0,0,0,0.4);
+}
+
+/* ----------------- ORBITING SPARKS ----------------- */
+.limited-btn-wrapper .spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: rgba(252,191,73,0.9);
+  border-radius: 50%;
+  pointer-events: none;
+  width: 6px;
+  height: 6px;
+  transform-origin: 0 -50px;
+  animation: orbit linear infinite, twinkle 2s infinite;
+}
+
+/* Multiple spark layers with different radius & speed */
+.limited-btn-wrapper .spark:nth-child(1)  { animation-duration: 4s; transform-origin: 0 -50px; animation-delay: 0s; }
+.limited-btn-wrapper .spark:nth-child(2)  { animation-duration: 5s; transform-origin: 0 -65px; animation-delay: 0.5s; }
+.limited-btn-wrapper .spark:nth-child(3)  { animation-duration: 3.8s; transform-origin: 0 -80px; animation-delay: 0.2s; }
+.limited-btn-wrapper .spark:nth-child(4)  { animation-duration: 4.5s; transform-origin: 0 -40px; animation-delay: 0.7s; }
+.limited-btn-wrapper .spark:nth-child(5)  { animation-duration: 4.2s; transform-origin: 0 -55px; animation-delay: 0.3s; }
+.limited-btn-wrapper .spark:nth-child(6)  { animation-duration: 3.6s; transform-origin: 0 -70px; animation-delay: 0.4s; }
+.limited-btn-wrapper .spark:nth-child(7)  { animation-duration: 5s; transform-origin: 0 -60px; animation-delay: 0.6s; }
+.limited-btn-wrapper .spark:nth-child(8)  { animation-duration: 4.8s; transform-origin: 0 -75px; animation-delay: 0.2s; }
+.limited-btn-wrapper .spark:nth-child(9)  { animation-duration: 3.9s; transform-origin: 0 -85px; animation-delay: 0.5s; }
+.limited-btn-wrapper .spark:nth-child(10) { animation-duration: 4.1s; transform-origin: 0 -90px; animation-delay: 0.1s; }
+
+/* ----------------- ANIMATIONS ----------------- */
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(0); }
+  100% { transform: rotate(360deg) translateX(0); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  25% { opacity: 1; }
+  50% { opacity: 0.6; }
+  75% { opacity: 0.9; }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 15px rgba(252,191,73,0.3); }
+  50% { box-shadow: 0 14px 40px rgba(0,0,0,0.5), 0 0 25px rgba(252,191,73,0.6); }
+}
+
+/* ----------------- WHITE HALO BEHIND GLASSES ----------------- */
+@keyframes haloPulse {
+  0%   { transform: translate(-50%, -50%) scale(0.95); opacity: 0.7; }
+  50%  { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.7; }
+}
+
+/* ----------------- ABOUT SECTION ----------------- */
+/* ----------------- GENERAL SECTION STYLING ----------------- */
+section {
+  padding: 80px 20px;
+  text-align: center;
+  color: #f5f5f5; /* light text for dark background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ----------------- SECTION HEADINGS ----------------- */
+section h2 {
+  font-size: 36px;
+  color: #ffcc33; /* gold accent */
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+section h2:hover {
+  transform: scale(1.05);
+}
+
+/* ----------------- PARAGRAPHS ----------------- */
+section p {
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto 15px auto;
+  color: #ddd;
+  transition: color 0.3s ease;
+}
+
+section p strong {
+  color: #ffcc33;
+}
+
+/* ----------------- CONTACT LINKS ----------------- */
+.contact-section p a {
+  color: #ffcc33;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-section p a:hover {
+  color: #fcbf49;
+  text-decoration: underline;
+}
+
+/* ----------------- SUBTLE INTERACTIVE EFFECTS ----------------- */
+section p:hover {
+  color: #fff;
+}
+
+/* ----------------- RESPONSIVE ----------------- */
+@media (max-width: 768px) {
+  section h2 {
+    font-size: 28px;
+  }
+  section p {
+    font-size: 16px;
+  }
+}
 
 
 
