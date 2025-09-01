@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/s-ara888/Tech/issues"
   },
-  "homepage": "https://github.com/s-ara888/Tech#readme"
+  "homepage": "https://github.com/s-ara888/Tech#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.0"
+  }
 }
